@@ -1,4 +1,4 @@
-//Testbench del ejercicio 1
+//Testbench del ejercicio 1, 2 y 3
 
 module testbench();
 
