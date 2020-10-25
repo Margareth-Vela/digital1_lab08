@@ -2,7 +2,7 @@
 
 module testbench();
 
-  reg clock, rst, enable, Load;
+  reg clock, rst, enabled, Load;
   reg [3:0] A, B;
   reg [2:0] F;
   reg [11:0] Ld, direccion;
@@ -19,7 +19,7 @@ module testbench();
       #1;
   end
 
-  counter G1(clock, rst, enable, Load, Ld, Y);
+  counter G1(clock, rst, enabled, Load, Ld, Y);
   ROM     G2(direccion, palabra);
   alu     G3(A, B, F, ALU);
 
@@ -29,21 +29,22 @@ module testbench();
     $display("\n");
     $display(" Clk RST | EN  LOAD |       LD       |        Y       ");
     $display(" -------------------------------------------------------- ");
-    $monitor(" %b    %b  | %b      %b |  %b  |  %b ", clock, rst, enable, Load, Ld, Y);
+    $monitor(" %b    %b  | %b      %b |  %b  |  %b ", clock, rst, enabled, Load, Ld, Y);
 
     #1 rst = 1; //Reset inicial
     #1 rst = 0; //Reset inicial
-    #2 enable = 1; Load = 0; Ld[11] = 0; Ld[10] = 0; Ld[9] = 0; Ld[8] = 0; Ld[7] = 0; Ld[6] = 0; Ld[5] = 1; Ld[4] = 0; Ld[3] = 1; Ld[2] = 0; Ld[1] = 1; Ld[0] =0;
+    #2 enabled = 1; Load = 0; Ld[11] = 0; Ld[10] = 0; Ld[9] = 0; Ld[8] = 0; Ld[7] = 0; Ld[6] = 0; Ld[5] = 1; Ld[4] = 0; Ld[3] = 1; Ld[2] = 0; Ld[1] = 1; Ld[0] =0;
     #12 Load = 1;
     #1 Load = 0;
-    #6 enable = 0;
-    #8 enable = 1;
+    #6 enabled = 0;
+    #8 enabled = 1;
     end
 
     initial begin
       #38
       $display("\n");
       $display(" Memoria ROM - Ejercicio 2");
+      $display("\n");
       $display("    Address       |   Palabra   ");
       $display("-----------------------------");
       $monitor("%b  |   %b", direccion, palabra);
@@ -57,6 +58,7 @@ module testbench();
       #60
       $display("\n");
       $display("ALU - Ejercicio 3");
+      $display("\n");
       $display("   A         B   |  F  |    Y ");
       $display(" ----------------------------- ");
       $monitor(" %b    %b  | %b |  %b ", A, B, F, ALU);

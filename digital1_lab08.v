@@ -1,15 +1,15 @@
 /*Margareth Vela
-Sección: 20 
+Sección: 20
 Carné: 19458 */
 
 //Primer ejercicio - Contador
-module counter(input wire clk, rst, enable, Load, input wire [11:0] Ld, output reg [11:0] Y);
+module counter(input wire clk, rst, enabled, Load, input wire [11:0] Ld, output reg [11:0] Y);
 
   always @ (posedge clk or posedge rst) begin
     if (rst == 1) begin
       Y <= 12'b0;
       end
-    else if (enable == 1) begin
+    else if (enabled == 1) begin
         if (Load == 1) begin
           Y <= Ld;
         end
@@ -17,7 +17,7 @@ module counter(input wire clk, rst, enable, Load, input wire [11:0] Ld, output r
         Y <= Y + 1;
         end
       end
-    else if (enable == 0) begin
+    else if (enabled == 0) begin
       Y <= Y;
       end
     end
@@ -25,11 +25,11 @@ endmodule
 
 //Segundo ejercicio - Memoria ROM
 module ROM(input wire [11:0] direccion, output wire [7:0] palabra);
-  reg [7:0] mem [0:4095];
+  reg [7:0] memoria [0:4095];
   initial begin
-      $readmemh("datos.list", mem);
+      $readmemh("datos.list", memoria);
   end
-  assign palabra = mem[direccion];
+  assign palabra = memoria[direccion];
 endmodule
 
 //Tercer ejercicio - ALU
